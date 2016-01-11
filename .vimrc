@@ -22,7 +22,6 @@ syntax on
 set textwidth=80
 set colorcolumn=+1
 set tabstop=4 shiftwidth=4 expandtab
-set foldmethod=syntax
 set nocompatible
 set backspace=2
 set encoding=utf-8
@@ -31,6 +30,9 @@ set nocompatible
 set ruler          " Show position of the cursor in status bar
 set number         " Show number lines
 set cursorline     " Highlight cursor line
+set foldmethod=syntax
+" Python's folding
+autocmd Filetype python set foldmethod=indent
 
 "------------------------------------------------------------------
 " Plugins - Vundle
