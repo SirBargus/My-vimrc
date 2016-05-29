@@ -142,6 +142,7 @@ map <F3> :echo 'Current time is ' . strftime('%c')<CR>
 " Explorer
 "------------------------------------------------------------------
 map <C-n> :Explore<CR>
+map <C-N> :Sex<CR>
 let g:netrw_liststyle=3
 
 "------------------------------------------------------------------
