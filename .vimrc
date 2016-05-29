@@ -54,7 +54,8 @@ Plugin 'Raimondi/delimitMate'     " Delimiters
 Plugin 'vim-latex/vim-latex'      " vim latex
 Plugin 'altercation/vim-colors-solarized' " solarized
 Plugin 'Yggdroot/indentLine'
-Plugin 'scrooloose/nerdtree'
+" Use :Explorer instead of NERDTree
+"Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 call vundle#end()
 filetype plugin indent on
@@ -138,8 +139,14 @@ set cm=blowfish2
 map <F3> :echo 'Current time is ' . strftime('%c')<CR>
 
 "------------------------------------------------------------------
+" Explorer
+"------------------------------------------------------------------
+map <C-n> :Explore<CR>
+let g:netrw_liststyle=3
+
+"------------------------------------------------------------------
 " NerdTree Commander
 "------------------------------------------------------------------
-let NERDTreeQuitOnOpen=1
-map <C-n> :NERDTree<CR>
-map <C-m> :NERDTreeMirror<CR>
+"let NERDTreeQuitOnOpen=1
+"map <C-n> :NERDTree<CR>
+"map <C-m> :NERDTreeMirror<CR>
