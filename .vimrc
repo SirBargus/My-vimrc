@@ -37,8 +37,11 @@ set number         " Show number lines
 set foldmethod=syntax
 " Python's folding
 autocmd Filetype python set foldmethod=indent
+" Spellang
 autocmd Filetype *tex set spelllang=es
 autocmd Filetype markdown set spelllang=es
+autocmd Filetype *wiki set spelllang=es
+
 set spell
 set foldnestmax=2
 set incsearch
@@ -46,6 +49,8 @@ set hlsearch
 set breakindent
 
 let mapleader = ","
+
+set t_Co=256
 
 "--- Buffer movement ---
 " Open a new buffer
@@ -75,6 +80,7 @@ Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'altercation/vim-colors-solarized' " solarized
 Plugin 'Yggdroot/indentLine'
 Plugin 'vimwiki/vimwiki'
+Plugin 'rust-lang/rust.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -132,7 +138,11 @@ autocmd BufNewFile *.tex r $HOME/Dropbox/latex_template/arara.txt
 
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf = 'arara $*.tex'
-let g:Tex_ViewRule_pdf = 'open -a Skim' 
+if has("mac")
+    let g:Tex_ViewRule_pdf = 'open -a Skim' 
+elseif has("unix")
+    let g:Tex_ViewRule_pdf = 'evince' 
+endif
 
 "------------------------------------------------------------------
 " Config Synastic
@@ -181,5 +191,14 @@ map <F4> :!pandoc ${pwd}% --latex-engine=xelatex -o ${pwd}%<.pdf<CR>
 "------------------------------------------------------------------
 " Latex Preview
 "------------------------------------------------------------------
-let g:livepreview_previewer = 'open -a Skim'
+if has("mac")
+    let g:livepreview_previewer = 'open -a Skim'
+elseif has("unix")
+    let g:livepreview_previewer = 'evince'
+endif
 map <F4> :LLPStartPreview<CR>
+
+"------------------------------------------------------------------
+" Vim Wiki
+"------------------------------------------------------------------
+let g:vimwiki_list = [{'path': '~/Dropbox/wiki'}]
