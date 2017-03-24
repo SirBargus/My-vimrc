@@ -1,21 +1,5 @@
-"-----------------------------------------------------------------
-" Spanish's key
-"-----------------------------------------------------------------
-"nnoremap j h
-"nnoremap k j
-"nnoremap l k
-"nnoremap ñ l
-"nnoremap J H
-"nnoremap K J
-"nnoremap L K
-"nnoremap Ñ L
-"vnoremap j h
-"vnoremap k j
-"vnoremap l k
-"vnoremap ñ l
-
 "------------------------------------------------------------------
-" Other mapped keys
+" Mapped keys
 "------------------------------------------------------------------
 
 "------------------------------------------------------------------
@@ -137,7 +121,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 autocmd BufNewFile *.tex r $HOME/Dropbox/latex_template/arara.txt
 
 let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_CompileRule_pdf = 'arara $*.tex'
+let g:Tex_CompileRule_pdf = 'xelatex $*.tex'
 if has("mac")
     let g:Tex_ViewRule_pdf = 'open -a Skim' 
 elseif has("unix")
