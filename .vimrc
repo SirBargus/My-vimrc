@@ -1,5 +1,5 @@
 "------------------------------------------------------------------
-" Mapped keys
+" Other mapped keys
 "------------------------------------------------------------------
 
 "------------------------------------------------------------------
@@ -28,13 +28,11 @@ autocmd Filetype *wiki set spelllang=es
 
 set spell
 set foldnestmax=2
-set incsearch
-set hlsearch
+"set incsearch
+"set hlsearch
 set breakindent
 
 let mapleader = ","
-
-set t_Co=256
 
 "--- Buffer movement ---
 " Open a new buffer
@@ -65,6 +63,8 @@ Plugin 'altercation/vim-colors-solarized' " solarized
 Plugin 'Yggdroot/indentLine'
 Plugin 'vimwiki/vimwiki'
 Plugin 'rust-lang/rust.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'majutsushi/tagbar'
 call vundle#end()
 filetype plugin indent on
 
@@ -122,11 +122,7 @@ autocmd BufNewFile *.tex r $HOME/Dropbox/latex_template/arara.txt
 
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf = 'xelatex $*.tex'
-if has("mac")
-    let g:Tex_ViewRule_pdf = 'open -a Skim' 
-elseif has("unix")
-    let g:Tex_ViewRule_pdf = 'evince' 
-endif
+let g:Tex_ViewRule_pdf = 'open -a Skim' 
 
 "------------------------------------------------------------------
 " Config Synastic
@@ -175,14 +171,18 @@ map <F4> :!pandoc ${pwd}% --latex-engine=xelatex -o ${pwd}%<.pdf<CR>
 "------------------------------------------------------------------
 " Latex Preview
 "------------------------------------------------------------------
-if has("mac")
-    let g:livepreview_previewer = 'open -a Skim'
-elseif has("unix")
-    let g:livepreview_previewer = 'evince'
-endif
+let g:livepreview_previewer = 'open -a Skim'
 map <F4> :LLPStartPreview<CR>
 
 "------------------------------------------------------------------
 " Vim Wiki
 "------------------------------------------------------------------
 let g:vimwiki_list = [{'path': '~/Dropbox/wiki'}]
+let g:vimwiki_folding='syntax'
+
+"------------------------------------------------------------------
+" TagBar and NerdTree
+"------------------------------------------------------------------
+map <C-m> :TagbarToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
+let g:tagbar_ctags_bin='/usr/local/bin/ctags'
