@@ -1,7 +1,6 @@
 "------------------------------------------------------------------
 " Other mapped keys
 "------------------------------------------------------------------
-
 "------------------------------------------------------------------
 " Syntax, number, limit, encoding, tab, fold, backspace, speel
 "------------------------------------------------------------------
@@ -33,6 +32,13 @@ set foldnestmax=2
 set breakindent
 
 let mapleader = ","
+set undofile " Maintain undo history between sessions
+
+" Create if not exist, undodir
+silent !mkdir ~/.vim/undodir > /dev/null 2>&1
+set undodir=~/.vim/undodir  " Undo across vim sessions
+set undolevels=1000         " How many undos
+set undoreload=10000        " Mumber of lines to save for undo
 
 "--- Buffer movement ---
 " Open a new buffer
@@ -117,12 +123,16 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " Config latex
 "------------------------------------------------------------------
 
-" Auto insert text for arara compiling
-autocmd BufNewFile *.tex r $HOME/Dropbox/latex_template/arara.txt
-
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf = 'xelatex $*.tex'
-let g:Tex_ViewRule_pdf = 'open -a Skim' 
+if has("unix")
+    let s:uname = system("uname -s")
+    if s:uname == "Darwin"
+        let g:Tex_ViewRule_pdf = 'open -a Skim' 
+    else
+        let g:Tex_ViewRule_pdf = 'evince' 
+    endif
+endif
 
 "------------------------------------------------------------------
 " Config Synastic
@@ -171,7 +181,14 @@ map <F4> :!pandoc ${pwd}% --latex-engine=xelatex -o ${pwd}%<.pdf<CR>
 "------------------------------------------------------------------
 " Latex Preview
 "------------------------------------------------------------------
-let g:livepreview_previewer = 'open -a Skim'
+if has("unix")
+    let s:uname = system("uname -s")
+    if s:uname == "Darwin"
+        let g:livepreview_previewer = 'open -a Skim'
+    else
+        let g:livepreview_previewer = 'evince'
+    endif
+endif
 map <F4> :LLPStartPreview<CR>
 
 "------------------------------------------------------------------
