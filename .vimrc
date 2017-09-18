@@ -1,6 +1,7 @@
 "------------------------------------------------------------------
 " Other mapped keys
 "------------------------------------------------------------------
+
 "------------------------------------------------------------------
 " Syntax, number, limit, encoding, tab, fold, backspace, speel
 "------------------------------------------------------------------
@@ -31,14 +32,11 @@ set foldnestmax=2
 "set hlsearch
 set breakindent
 
-let mapleader = ","
-set undofile " Maintain undo history between sessions
+" Keeps the visual textwidht without breaking new line
+" set formatoptions-=t
+set nowrap
 
-" Create if not exist, undodir
-silent !mkdir ~/.vim/undodir > /dev/null 2>&1
-set undodir=~/.vim/undodir  " Undo across vim sessions
-set undolevels=1000         " How many undos
-set undoreload=10000        " Mumber of lines to save for undo
+let mapleader = ","
 
 "--- Buffer movement ---
 " Open a new buffer
@@ -71,15 +69,17 @@ Plugin 'vimwiki/vimwiki'
 Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
+Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 filetype plugin indent on
 
 "------------------------------------------------------------------
-" Config solarized
+" Config theme
 "------------------------------------------------------------------
 set background=dark
-colorscheme gruvbox
-"colorscheme solarized
+highlight Normal ctermbg=NONE
+colorscheme solarized
 
 "------------------------------------------------------------------
 " Config vim-airline
@@ -90,6 +90,8 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+"let g:airline_theme='wombat'
+let g:airline_theme='base16'
 
 " unicode symbols
 let g:airline_left_sep = '»'
@@ -123,15 +125,15 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " Config latex
 "------------------------------------------------------------------
 
+" Auto insert text for arara compiling
+autocmd BufNewFile *.tex r $HOME/Dropbox/latex_template/arara.txt
+
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf = 'xelatex $*.tex'
-if has("unix")
-    let s:uname = system("uname -s")
-    if s:uname == "Darwin"
-        let g:Tex_ViewRule_pdf = 'open -a Skim' 
-    else
-        let g:Tex_ViewRule_pdf = 'evince' 
-    endif
+if has('mac')
+    let g:Tex_ViewRule_pdf = 'open -a preview'
+elseif has("unix")
+    let g:Tex_ViewRule_pdf = 'evince' 
 endif
 
 "------------------------------------------------------------------
@@ -181,20 +183,20 @@ map <F4> :!pandoc ${pwd}% --latex-engine=xelatex -o ${pwd}%<.pdf<CR>
 "------------------------------------------------------------------
 " Latex Preview
 "------------------------------------------------------------------
-if has("unix")
-    let s:uname = system("uname -s")
-    if s:uname == "Darwin"
-        let g:livepreview_previewer = 'open -a Skim'
-    else
-        let g:livepreview_previewer = 'evince'
-    endif
+if has('mac')
+    let g:livepreview_previewer = 'open -a preview'
+elseif has("unix")
+    let g:livepreview_previewer = 'evince'
 endif
+
 map <F4> :LLPStartPreview<CR>
 
 "------------------------------------------------------------------
 " Vim Wiki
 "------------------------------------------------------------------
-let g:vimwiki_list = [{'path': '~/Dropbox/wiki'}]
+" Load from file the multiples wikis
+source ~/.vim/wikis.vim
+" let g:vimwiki_list = [{'path': '~/Dropbox/wiki'}]
 let g:vimwiki_folding='syntax'
 
 "------------------------------------------------------------------
@@ -203,3 +205,14 @@ let g:vimwiki_folding='syntax'
 map <C-m> :TagbarToggle<CR>
 map <C-n> :NERDTreeToggle<CR>
 let g:tagbar_ctags_bin='/usr/local/bin/ctags'
+
+"------------------------------------------------------------------
+" Markdown preview
+"------------------------------------------------------------------
+
+"let vim_markdown_preview_github=1
+if has('mac')
+    let vim_markdown_preview_browser='open -a firefox'
+elseif has("unix")
+    let vim_markdown_preview_browser='firefox'
+endif
