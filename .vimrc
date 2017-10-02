@@ -58,7 +58,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'       " Ctrlp
-Plugin 'scrooloose/syntastic'     " Syntastic
+Plugin 'w0rp/ale'
 Plugin 'bling/vim-airline'   
 Plugin 'Raimondi/delimitMate'     " Delimiters
 Plugin 'vim-latex/vim-latex'      " vim latex
@@ -71,6 +71,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'elixir-editors/vim-elixir' " Only for elixir (RSD)
 call vundle#end()
 filetype plugin indent on
 
@@ -216,3 +217,4 @@ if has('mac')
 elseif has("unix")
     let vim_markdown_preview_browser='firefox'
 endif
+
