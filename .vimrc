@@ -66,6 +66,7 @@ Plugin 'altercation/vim-colors-solarized' " solarized
 Plugin 'vimwiki/vimwiki'
 Plugin 'rust-lang/rust.vim'
 Plugin 'elixir-editors/vim-elixir'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 filetype plugin indent on
 
