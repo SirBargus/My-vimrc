@@ -65,7 +65,6 @@ Plugin 'vim-latex/vim-latex'      " vim latex
 Plugin 'altercation/vim-colors-solarized' " solarized
 Plugin 'vimwiki/vimwiki'
 Plugin 'rust-lang/rust.vim'
-Plugin 'elixir-editors/vim-elixir'
 Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 filetype plugin indent on
@@ -162,5 +161,6 @@ endif
 "------------------------------------------------------------------
 " Enable completion where available.
 let g:ale_completion_enabled = 1
-" Write this in your vimrc file
-let g:ale_lint_on_text_changed = 'never'
+
+" Ident for elixir
+autocmd Filetype *tex set tabstop=2 shiftwidth=2 expandtab
