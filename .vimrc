@@ -58,20 +58,15 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'       " Ctrlp
-Plugin 'w0rp/ale'
+Plugin 'w0rp/ale'                 " Ale, (like synastic)
 Plugin 'bling/vim-airline'   
 Plugin 'Raimondi/delimitMate'     " Delimiters
 Plugin 'vim-latex/vim-latex'      " vim latex
-Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'altercation/vim-colors-solarized' " solarized
-Plugin 'Yggdroot/indentLine'
 Plugin 'vimwiki/vimwiki'
 Plugin 'rust-lang/rust.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar'
-Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'elixir-editors/vim-elixir' " Only for elixir (RSD)
+Plugin 'elixir-editors/vim-elixir'
 call vundle#end()
 filetype plugin indent on
 
@@ -91,8 +86,7 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-"let g:airline_theme='wombat'
-let g:airline_theme='base16'
+let g:airline_solarized_bg='dark'
 
 " unicode symbols
 let g:airline_left_sep = '»'
@@ -218,3 +212,10 @@ elseif has("unix")
     let vim_markdown_preview_browser='firefox'
 endif
 
+"------------------------------------------------------------------
+" Ale
+"------------------------------------------------------------------
+" Enable completion where available.
+let g:ale_completion_enabled = 1
+" Write this in your vimrc file
+let g:ale_lint_on_text_changed = 'never'
