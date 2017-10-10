@@ -25,6 +25,9 @@ autocmd Filetype python set foldmethod=indent
 autocmd Filetype *tex set spelllang=es
 autocmd Filetype markdown set spelllang=es
 autocmd Filetype *wiki set spelllang=es
+autocmd Filetype *exs set tabstop=2 | 
+            \ set shiftwidth=2 | 
+            \ syntax=elixir
 
 set spell
 set foldnestmax=2
@@ -66,6 +69,8 @@ Plugin 'altercation/vim-colors-solarized' " solarized
 Plugin 'vimwiki/vimwiki'
 Plugin 'rust-lang/rust.vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 filetype plugin indent on
 
@@ -75,6 +80,45 @@ filetype plugin indent on
 set background=dark
 highlight Normal ctermbg=NONE
 colorscheme solarized
+
+"------------------------------------------------------------------
+" Config vim-airline
+"------------------------------------------------------------------
+let g:airline#extensions#branch = 1
+let g:airline#extensions#syntastic = 1
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_solarized_bg='dark'
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+"airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+set laststatus=2
+
+"airline buffer options
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 "------------------------------------------------------------------
 " Config latex
@@ -139,10 +183,9 @@ source ~/.vim/wikis.vim
 let g:vimwiki_folding='syntax'
 
 "------------------------------------------------------------------
-" TagBar and NerdTree
+" TagBar
 "------------------------------------------------------------------
 map <C-m> :TagbarToggle<CR>
-map <C-n> :NERDTreeToggle<CR>
 let g:tagbar_ctags_bin='/usr/local/bin/ctags'
 
 "------------------------------------------------------------------
@@ -162,5 +205,4 @@ endif
 " Enable completion where available.
 let g:ale_completion_enabled = 1
 
-" Ident for elixir
-autocmd Filetype *tex set tabstop=2 shiftwidth=2 expandtab
+
