@@ -27,6 +27,7 @@ autocmd Filetype markdown set spelllang=es
 autocmd Filetype *wiki set spelllang=es
 autocmd Filetype *exs set tabstop=2 | 
             \ set shiftwidth=2 | 
+            \ expandtab |
             \ syntax=elixir
 
 set spell
@@ -34,8 +35,11 @@ set foldnestmax=2
 set breakindent
 
 " Keeps the visual textwidht without breaking new line
-" set formatoptions-=t
+set formatoptions-=t
 set nowrap
+
+" Italic Comments
+highlight Comment cterm=italic
 
 let mapleader = ","
 
@@ -62,7 +66,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'       " Ctrlp
-Plugin 'w0rp/ale'                 " Ale, (like synastic)
 Plugin 'Raimondi/delimitMate'     " Delimiters
 Plugin 'vim-latex/vim-latex'      " vim latex
 Plugin 'altercation/vim-colors-solarized' " solarized
@@ -71,6 +74,12 @@ Plugin 'rust-lang/rust.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'majutsushi/tagbar'
+Plugin 'w0rp/ale'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'maralla/completor.vim'
+Plugin 'reedes/vim-pencil'      " Plugin for writing with vim
 call vundle#end()
 filetype plugin indent on
 
@@ -125,7 +134,6 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 "------------------------------------------------------------------
 
 " Auto insert text for arara compiling
-autocmd BufNewFile *.tex r $HOME/Dropbox/latex_template/arara.txt
 
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf = 'xelatex $*.tex'
@@ -144,7 +152,9 @@ let g:indentLine_char = '│'
 "------------------------------------------------------------------
 " Encryptation algorithm
 "------------------------------------------------------------------
-set cm=blowfish2
+if !has('nvim')
+   set cm=blowfish2
+endif
 
 "------------------------------------------------------------------
 " Special shortcut
@@ -202,7 +212,30 @@ endif
 "------------------------------------------------------------------
 " Ale
 "------------------------------------------------------------------
-" Enable completion where available.
-let g:ale_completion_enabled = 1
 
+"------------------------------------------------------------------
+" NERDTree
+"------------------------------------------------------------------
+map <C-n> :NERDTreeToggle<CR>
 
+"------------------------------------------------------------------
+" Completor.vim
+"------------------------------------------------------------------
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" Completion only avalaible for Python, C, Rust and Lates
+let g:completor_whitelist=['python', 'c', 'cpp', 'rust']
+if has('mac')
+    let g:completor_python_binary = '/usr/local/bin/python3'
+    let g:completor_racer_binary = '/path/to/racer'
+    let g:completor_clang_binary = '/usr/bin/clang'
+elseif has("unix")
+endif
+
+"------------------------------------------------------------------
+" Pencil
+"------------------------------------------------------------------
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init({'wrap': 'hard', 'autoformat': 0})
+augroup END
